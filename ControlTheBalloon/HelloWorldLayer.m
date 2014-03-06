@@ -18,6 +18,9 @@
 @property (strong) CCSprite *back2;
 @property float backHeight;
 @property float backWidth;
+@property (strong)CCSprite *block1;
+@property (strong)CCSprite *block2;
+@property (strong) NSMutableArray *blockArray1;
 @end
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
@@ -64,12 +67,92 @@
         
         CGSize size=[[CCDirector sharedDirector]winSize];
         
+        _block1=[CCSprite spriteWithFile:@"block2.png"];
+        _block2=[CCSprite spriteWithFile:@"block.png"];
+        _blockArray1=[NSMutableArray array];
+        
         NSLog(@"%f,  %f ,  %f,  %f ",size.height,size.width,
               _backHeight,_backWidth);
+        //[self schedule:@selector(addBlockLine)];
+        //[self addBlockLine];
+        
+        [self addAll];
 	}
 	return self;
 }
 
+-(void) addAll
+{
+    CGSize size=[[CCDirector sharedDirector] winSize];
+    float diff=100.0f;
+    int count=size.height/diff;
+    
+    for(int i=0;i<=count;i++)
+    {
+        
+        [self addBlock1:i*diff];
+    }
+
+}
+-(void) addBlockLine
+{
+    [self addBlock1:0.0f];
+}
+-(void) addBlock1:(float)height
+{
+    NSLog(@"========  %f",height);
+    
+    CGSize size=[[CCDirector sharedDirector] winSize];
+    //CGSize bsize=_block1.boundingBox.size;
+    /*
+    CGRect repeatRect = CGRectMake(0, size.height, bsize.width, bsize.height);
+    CCSprite* block = [CCSprite spriteWithFile:@"block2.png" rect:repeatRect];
+
+    ccTexParams params ={
+        GL_LINEAR,
+        GL_LINEAR,
+        GL_REPEAT,
+        GL_REPEAT
+    };
+    */
+    
+	CGSize boxSize = CGSizeMake(100.0f, 10.0f);
+
+    CCLayerColor *box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
+	box.anchorPoint = ccp(0.5,0.5);
+	box.contentSize = boxSize;
+	box.ignoreAnchorPointForPosition = NO;
+   // box.position=ccp(size.width/2, size.height);
+    box.position=ccp(size.width/2, height);
+    
+    //[block sets];
+    //CCSprite * block=[CCSprite spriteWithTexture:<#(CCTexture2D *)#>];//[CCSprite //spriteWithFile:@"block2.png"];
+    
+    [self addChild:box z:1];
+    
+    
+    float bearVelocity =480.0/6.0;
+    
+    float length=height;
+    float delay=length/bearVelocity;
+    
+    id move=[CCMoveTo actionWithDuration:delay position:ccp(size.width/2,-100)];
+    
+    //[CCCallFunc actionWithTarget:self selector:@selector(check1)]
+    
+    id se=[CCSequence actions:move,[CCCallFuncN actionWithTarget:self selector:@selector(deleteThis:)], nil];
+    
+    [box runAction:se];
+    //[_blockArray1 addObject:box];
+}
+
+- (void) deleteThis:(id)sender
+{
+    CGSize size=[[CCDirector sharedDirector] winSize];
+    [self addBlock1:size.height];
+    [sender removeFromParent ];
+    //[sender dealloc];
+}
 -(void) updateBack:(ccTime)dt
 {
     
@@ -124,6 +207,7 @@
 	// cocos2d will automatically release all the children (Label)
 	
 	// don't forget to call "super dealloc"
+    [_blockArray1 dealloc];
 	[super dealloc];
 }
 
