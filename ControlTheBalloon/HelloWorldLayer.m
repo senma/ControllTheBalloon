@@ -13,10 +13,14 @@
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 
-#pragma mark - HelloWorldLayer
+@interface HelloWorldLayer()
+@property (strong) CCSprite *back1;
+@property (strong) CCSprite *back2;
 
+@end
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
+
 
 // Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
@@ -41,71 +45,59 @@
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
 		
+       // [CCParallaxNode];
 		// create and initialize a Label
-		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
-
-		// ask director for the window size
-		CGSize size = [[CCDirector sharedDirector] winSize];
-	
-		// position the label on the center of the screen
-		label.position =  ccp( size.width /2 , size.height/2 );
-		
-		// add the label as a child to this Layer
-		[self addChild: label];
-		
-		
-		
-		//
-		// Leaderboards and Achievements
-		//
-		
-		// Default font size will be 28 points.
-		[CCMenuItemFont setFontSize:28];
-		
-		// to avoid a retain-cycle with the menuitem and blocks
-		__block id copy_self = self;
-		
-		// Achievement Menu Item using blocks
-		CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
-			
-			
-			GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
-			achivementViewController.achievementDelegate = copy_self;
-			
-			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-			
-			[[app navController] presentModalViewController:achivementViewController animated:YES];
-			
-			[achivementViewController release];
-		}];
-		
-		// Leaderboard Menu Item using blocks
-		CCMenuItem *itemLeaderboard = [CCMenuItemFont itemWithString:@"Leaderboard" block:^(id sender) {
-			
-			
-			GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
-			leaderboardViewController.leaderboardDelegate = copy_self;
-			
-			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-			
-			[[app navController] presentModalViewController:leaderboardViewController animated:YES];
-			
-			[leaderboardViewController release];
-		}];
-
-		
-		CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, nil];
-		
-		[menu alignItemsHorizontallyWithPadding:20];
-		[menu setPosition:ccp( size.width/2, size.height/2 - 50)];
-		
-		// Add the menu to the layer
-		[self addChild:menu];
-
+		_back1=[CCSprite spriteWithFile:@"city.png"];
+        _back2=[CCSprite spriteWithFile:@"city.png"];
+        
+        float _picX=[_back1 boundingBox].size.height;
+        float _picY=[_back1 boundingBox].size.width;
+        NSLog(@"%f        %f",_picX,_picY);
+        _back1.position=ccp(0,0);
+        [self addChild:_back1 z:-1];
+        
+        _back2.position=ccp(0+_picY,0);
+        [self addChild:_back2 z:-1];
+        
+        [[_back1 texture] setAliasTexParameters];
+        [_back1 setAnchorPoint:ccp(0,0)];
+        
+        
+        [[_back2 texture] setAliasTexParameters];
+        [_back2 setAnchorPoint:ccp(0,0)];
+        [self schedule:@selector(updateBack:)];
 	}
 	return self;
 }
 
+-(void) updateBack:(ccTime)dt
+{
+    
+    
+    float _picX=[_back1 boundingBox].size.height;
+    float _picY=[_back1 boundingBox].size.width;
+    
+    CGPoint back1point=_back1.position;
+    CGPoint back2point=_back2.position;
+    
+    back1point=ccp(back1point.x-4, back1point.y);
+    back2point=ccp(back2point.x-4, back2point.y);
+    
+    CGSize size=[[CCDirector sharedDirector]winSize];
+    
+    if(back1point.x<(-_picY))
+    {
+        back1point=ccp(_picY-4, back1point.y);
+    }
+    
+    if(back2point.x<(-_picY))
+    {
+        back2point=ccp(_picY-4, back2point.y);
+    }
+    _back1.position=back1point;
+    
+    _back2.position=back2point;
+}
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc
 {
@@ -117,17 +109,4 @@
 	[super dealloc];
 }
 
-#pragma mark GameKit delegate
-
--(void) achievementViewControllerDidFinish:(GKAchievementViewController *)viewController
-{
-	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app navController] dismissModalViewControllerAnimated:YES];
-}
-
--(void) leaderboardViewControllerDidFinish:(GKLeaderboardViewController *)viewController
-{
-	AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
-	[[app navController] dismissModalViewControllerAnimated:YES];
-}
 @end

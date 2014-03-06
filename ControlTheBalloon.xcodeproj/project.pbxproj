@@ -141,6 +141,7 @@
 		A05FCAA818C75D4D00EE2801 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A05FCAA718C75D4D00EE2801 /* AppDelegate.m */; };
 		A05FCAAB18C75D4D00EE2801 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A05FCAAA18C75D4D00EE2801 /* HelloWorldLayer.m */; };
 		A05FCAAE18C75D4D00EE2801 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = A05FCAAD18C75D4D00EE2801 /* IntroLayer.m */; };
+		A05FCAB518C7602100EE2801 /* city.png in Resources */ = {isa = PBXBuildFile; fileRef = A05FCAB418C7602100EE2801 /* city.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -425,6 +426,7 @@
 		A05FCAAA18C75D4D00EE2801 /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
 		A05FCAAC18C75D4D00EE2801 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		A05FCAAD18C75D4D00EE2801 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
+		A05FCAB418C7602100EE2801 /* city.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = city.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,6 +503,7 @@
 		A05FC91618C75D4B00EE2801 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A05FCAB418C7602100EE2801 /* city.png */,
 				A05FC91718C75D4B00EE2801 /* Default.png */,
 				A05FC91918C75D4B00EE2801 /* Default@2x.png */,
 				A05FC91B18C75D4B00EE2801 /* Default-568h@2x.png */,
@@ -942,6 +945,7 @@
 				A05FC92A18C75D4B00EE2801 /* Icon@2x.png in Resources */,
 				A05FC92D18C75D4B00EE2801 /* iTunesArtwork in Resources */,
 				A05FCA8618C75D4D00EE2801 /* ChangeLog in Resources */,
+				A05FCAB518C7602100EE2801 /* city.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
