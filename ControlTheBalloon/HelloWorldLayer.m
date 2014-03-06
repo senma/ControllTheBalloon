@@ -16,7 +16,8 @@
 @interface HelloWorldLayer()
 @property (strong) CCSprite *back1;
 @property (strong) CCSprite *back2;
-
+@property float backHeight;
+@property float backWidth;
 @end
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
@@ -44,28 +45,27 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super's" return value
 	if( (self=[super init]) ) {
-		
-       // [CCParallaxNode];
-		// create and initialize a Label
-		_back1=[CCSprite spriteWithFile:@"city.png"];
-        _back2=[CCSprite spriteWithFile:@"city.png"];
+
+		_back1=[CCSprite spriteWithFile:@"sky.png"];
+        _back2=[CCSprite spriteWithFile:@"sky.png"];
         
-        float _picX=[_back1 boundingBox].size.height;
-        float _picY=[_back1 boundingBox].size.width;
-        NSLog(@"%f        %f",_picX,_picY);
+        _backHeight=[_back1 boundingBox].size.height;
+        _backWidth=[_back1 boundingBox].size.width;
         _back1.position=ccp(0,0);
         [self addChild:_back1 z:-1];
-        
-        _back2.position=ccp(0+_picY,0);
+        _back2.position=ccp(0,_backHeight);
         [self addChild:_back2 z:-1];
-        
+
         [[_back1 texture] setAliasTexParameters];
-        [_back1 setAnchorPoint:ccp(0,0)];
-        
-        
+        [_back1 setAnchorPoint:ccp(0.5,0)];
         [[_back2 texture] setAliasTexParameters];
-        [_back2 setAnchorPoint:ccp(0,0)];
+        [_back2 setAnchorPoint:ccp(0.5,0)];
         [self schedule:@selector(updateBack:)];
+        
+        CGSize size=[[CCDirector sharedDirector]winSize];
+        
+        NSLog(@"%f,  %f ,  %f,  %f ",size.height,size.width,
+              _backHeight,_backWidth);
 	}
 	return self;
 }
@@ -74,29 +74,47 @@
 {
     
     
-    float _picX=[_back1 boundingBox].size.height;
-    float _picY=[_back1 boundingBox].size.width;
+    //float backHeigh=[_back1 boundingBox].size.height;
+    //float backWidth=[_back1 boundingBox].size.width;
     
     CGPoint back1point=_back1.position;
     CGPoint back2point=_back2.position;
     
-    back1point=ccp(back1point.x-4, back1point.y);
-    back2point=ccp(back2point.x-4, back2point.y);
+    back1point=ccp(back1point.x, back1point.y-1);
+    back2point=ccp(back2point.x, back2point.y-1);
     
-    CGSize size=[[CCDirector sharedDirector]winSize];
-    
-    if(back1point.x<(-_picY))
-    {
-        back1point=ccp(_picY-4, back1point.y);
-    }
-    
-    if(back2point.x<(-_picY))
-    {
-        back2point=ccp(_picY-4, back2point.y);
-    }
     _back1.position=back1point;
     
     _back2.position=back2point;
+    
+    //NSLog(@"xxx  %f    %f" ,_back1.position.y,_back2.position.y);
+    
+    if(back1point.y>(-_backHeight)&&back2point.y>(-_backHeight))
+    {
+        return;
+    }
+    //CGSize size=[[CCDirector sharedDirector]winSize];
+    
+    //NSLog(@"height 1= %f , 2=  %f",back1point.y,back2point.y);
+    
+    if(back1point.y<=(-_backHeight))
+    {
+       // NSLog(@"-----height 1= %f , 2=  %f,  achx,= %f anchy =%f  Bx=%f, By=%f ",back1point.y,back2point.y,_back1.anchorPoint.x ,_back1.anchorPoint.y,_back2.anchorPoint.x,_back2.anchorPoint.y);
+        back1point=ccp(back1point.x, back2point.y+_backHeight);
+        _back1.position=back1point;
+    }
+    
+    if(back2point.y<=(0-_backHeight))
+    {
+        
+       // NSLog(@"*****height 1= %f , 2=  %f,  achx,= %f anchy =%f  Bx=%f, By=%f ",back1point.y,back2point.y,_back1.anchorPoint.x ,_back1.anchorPoint.y,_back2.anchorPoint.x,_back2.anchorPoint.y);
+        
+        back2point=ccp(back2point.x, back1point.y+_backHeight);
+        _back2.position=back2point;
+    }
+    
+    
+    
 }
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc

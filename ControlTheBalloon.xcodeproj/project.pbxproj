@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96A38E9318C84A6B00583456 /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A38E9218C84A6B00583456 /* sky.png */; };
 		A05FC90218C75D4B00EE2801 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05FC90118C75D4B00EE2801 /* QuartzCore.framework */; };
 		A05FC90418C75D4B00EE2801 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05FC90318C75D4B00EE2801 /* OpenGLES.framework */; };
 		A05FC90618C75D4B00EE2801 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A05FC90518C75D4B00EE2801 /* OpenAL.framework */; };
@@ -145,6 +146,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		96A38E9218C84A6B00583456 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
 		A05FC8FE18C75D4B00EE2801 /* ControlTheBalloon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ControlTheBalloon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A05FC90118C75D4B00EE2801 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A05FC90318C75D4B00EE2801 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -503,6 +505,7 @@
 		A05FC91618C75D4B00EE2801 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96A38E9218C84A6B00583456 /* sky.png */,
 				A05FCAB418C7602100EE2801 /* city.png */,
 				A05FC91718C75D4B00EE2801 /* Default.png */,
 				A05FC91918C75D4B00EE2801 /* Default@2x.png */,
@@ -946,6 +949,7 @@
 				A05FC92D18C75D4B00EE2801 /* iTunesArtwork in Resources */,
 				A05FCA8618C75D4D00EE2801 /* ChangeLog in Resources */,
 				A05FCAB518C7602100EE2801 /* city.png in Resources */,
+				96A38E9318C84A6B00583456 /* sky.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1173,6 +1177,7 @@
 				A05FCAB318C75D4D00EE2801 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
